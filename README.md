@@ -30,9 +30,9 @@ diák csak egy lakószobához tartozhat.
 **Házi feladat**
 
 Csapattagok Neptun kóddal:
-- Szabó Kristóf (IEYTTX)
-- Tóth Krisztofer (UQRCW4)
-- Szabó Erik (EL9MFE)
+- Szabó Kristóf
+- Tóth Krisztofer
+- Szabó Erik
 
 Bemutató videó URL: https://drive.google.com/file/d/1HNP-b48Mv3_9rxmQGhQ3KnwwDVysVj9f/view?usp=sharing
 
