@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="CollegeApplication.Views.ElevatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CollegeApplication.Views"
+    xmlns:cv="using:CollegeApplication.Converters"
+    xmlns:el="using:CollegeManager"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+        <cv:BoolToStateConverter x:Key="BoolToStateConverter"/>
+    </Page.Resources>
+    
+    <StackPanel>
+        <StackPanel>
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="DeepSkyBlue" Offset="0.0" />
+                    <GradientStop Color="DodgerBlue" Offset="1.0" />
+                </LinearGradientBrush>
+            </StackPanel.Background>
+
+            <TextBlock Text="Lift Monitor" Margin="30 30 0 0" FontSize="40" FontWeight="Bold"/>
+            <TextBlock Text="A liftek kezelésért egy külső rendszer felel, így azok innen nem állíthatók." FontSize="20" Margin="30 0 0 0" TextWrapping="Wrap"/>
+            <TextBlock Text="Ennek az oldalnak a célja kizárólag az információ szolgálatás." FontSize="20" Margin="30 0 0 30" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <ItemsControl ItemsSource="{x:Bind ViewModel.Elevators, Mode=OneWay}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VariableSizedWrapGrid Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="el:Elevator">
+                    <StackPanel Margin="23 30 5 5" Width="200" Padding="10" Background="{ThemeResource SystemBaseLowColor}" >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind Id}" FontWeight="Bold"/>
+                            <TextBlock Text=" Lift"/>
+                        </StackPanel>
+                        <RelativePanel>
+                            <TextBlock Text="Jelenlegi emelet:"/>
+                            <TextBlock Text="{x:Bind CurrentFloor, Mode=OneWay}" FontWeight="Bold" RelativePanel.AlignRightWithPanel="True" Margin="0 0 5 0"/>
+                        </RelativePanel>
+                        <RelativePanel>
+                            <TextBlock Text="Következő emelet:"/>
+                            <TextBlock Text="{x:Bind NewFloor, Mode=OneWay}" FontWeight="Bold" RelativePanel.AlignRightWithPanel="True" Margin="0 0 5 0"/>
+                        </RelativePanel>
+                        <RelativePanel>
+                            <TextBlock Text="Állapot:"/>
+                            <TextBlock Text="{x:Bind IsWorking, Mode=OneWay, Converter={StaticResource BoolToStateConverter}}" RelativePanel.AlignRightWithPanel="True"/>
+                        </RelativePanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</Page>

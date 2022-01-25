@@ -1,0 +1,29 @@
+﻿<UserControl
+    x:Class="CollegeApplication.UserControls.SocialRoomControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CollegeApplication.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local1="using:CollegeApplication.Views" 
+    xmlns:sc="using:CollegeApplication.Converters" 
+    xmlns:college="using:CollegeManager"
+    mc:Ignorable="d"
+    d:DesignHeight="70"
+    d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <sc:CommonRoomTypeConverter x:Name="CommonRoomTypeConverter"/>
+    </UserControl.Resources>
+    
+    <StackPanel Orientation="Horizontal" Margin="5" Visibility="Visible">
+        <TextBlock Margin="5" FontSize="18" VerticalAlignment="Center">Szociális típus</TextBlock>
+        <ComboBox ItemsSource="{x:Bind local1:RoomView.SocialRoomType}" SelectedItem="{x:Bind CommonRoom.Type, Mode=OneTime}"   Margin="5" Width="130" Height="50" SelectionChanged="SocialRoomTypeSelection_Changed">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="college:SocialRoom">
+                    <TextBlock Text="{x:Bind Converter={StaticResource CommonRoomTypeConverter}}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </StackPanel>
+</UserControl>

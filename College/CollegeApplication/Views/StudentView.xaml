@@ -1,0 +1,109 @@
+﻿<Page
+    x:Class="CollegeApplication.Views.StudentView"
+    xmlns:cv="using:CollegeApplication.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CollegeApplication.Views"
+    xmlns:college="using:CollegeManager"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:rm="using:CollegeManager"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource ButtonRevealBackground}" />
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="13"/>
+        </Style>
+        <Style TargetType="RelativePanel">
+            <Setter Property="MinWidth" Value="500"/>
+        </Style>
+        <cv:StudentRoomConverter x:Key="StudentRoomConverter"/>
+    </Page.Resources>
+
+    <StackPanel>
+        <CommandBar DefaultLabelPosition="Right" OverflowButtonVisibility="Collapsed">
+            <AppBarButton Icon="Add" Label="Diák felvétele" AllowFocusOnInteraction="True">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel>
+                            <TextBox x:Name="studentName" PlaceholderText="Név" MinWidth="150"/>
+                            <TextBox x:Name="studentEmail" PlaceholderText="E-mail" MinWidth="150"/>
+                            <TextBox x:Name="studentNeptun" PlaceholderText="Neptun" MinWidth="150" Margin="0,0,0,10"/>
+                            <Button Content="Véglegesítés" Click="AddBtn_Click"/>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </CommandBar>
+        <StackPanel Orientation="Vertical" Height="200" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="DeepSkyBlue" Offset="0.0" />
+                    <GradientStop Color="DodgerBlue" Offset="1.0" />
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <TextBlock Text="Diákok Listája" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="60" FontWeight="Bold" Margin="17 30 0 30"/>
+        </StackPanel>
+
+        <controls:DataGrid ItemsSource="{x:Bind ViewModel.Model.Students, Mode=OneWay}" AutoGenerateColumns="False" DataContext="college:Student" GridLinesVisibility="All" AlternatingRowBackground="{ThemeResource ButtonRevealBackground}" HorizontalAlignment="Left">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTemplateColumn Header="Neptun" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="college:Student">
+                            <TextBlock Text="{x:Bind Neptun}"/>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTemplateColumn Header="Teljes Név" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="college:Student">
+                            <TextBlock Text="{x:Bind Name, Mode=OneWay}"/>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                    <controls:DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate x:DataType="college:Student">
+                            <TextBox Text="{x:Bind Name, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellEditingTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTemplateColumn Header="E-mail cím" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="college:Student">
+                            <TextBlock Text="{x:Bind Email, Mode=OneWay}"/>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                    <controls:DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate x:DataType="college:Student">
+                            <TextBox Text="{x:Bind Email, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellEditingTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTemplateColumn Header="Szoba száma" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="college:Student">
+                            <TextBlock Text="{x:Bind Room, Converter={StaticResource StudentRoomConverter}}"/>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTemplateColumn Header="Törlés" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="college:Student">
+                            <Button Tag="{x:Bind Neptun}" Click="Deletebtn_Click"  Margin="13 0 0 0">
+                                <SymbolIcon Symbol="Delete"/>
+                            </Button>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
+    </StackPanel>
+</Page>
